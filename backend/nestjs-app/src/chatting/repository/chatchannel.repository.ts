@@ -3,7 +3,6 @@ import { ChatChannel } from '../entities/chatchannel.entity';
 import { Not, Repository } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Participants } from 'src/participants/entities/participants.entity';
-import { ChatChannelType } from 'src/util';
 
 @CustomRepository(ChatChannel)
 export class ChatChannelRepository extends Repository<ChatChannel> {
@@ -21,7 +20,7 @@ export class ChatChannelRepository extends Repository<ChatChannel> {
   async createChatChannel(
     name: string,
     owner: User,
-    type: number,
+    type: string,
     password: string,
   ): Promise<ChatChannel> {
     const channel = new ChatChannel();
@@ -37,7 +36,7 @@ export class ChatChannelRepository extends Repository<ChatChannel> {
   async editChatChannel(
     id: string,
     name: string,
-    type: number,
+    type: string,
     password: string,
   ): Promise<ChatChannel> {
     const channel = await this.findOne({
@@ -83,7 +82,7 @@ export class ChatChannelRepository extends Repository<ChatChannel> {
       relations: {
         participants: true,
       },
-      where: { type: Not(ChatChannelType.PRIVATE) },
+      where: { type: Not('PRIVATE') },
     });
   }
 }

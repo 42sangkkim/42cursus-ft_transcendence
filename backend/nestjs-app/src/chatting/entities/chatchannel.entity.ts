@@ -21,7 +21,7 @@ export class ChatChannel extends BaseEntity {
   name: string;
 
   @Column()
-  type: number;
+  type: string;
 
   @Column()
   password: string;
